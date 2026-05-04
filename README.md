@@ -5,7 +5,7 @@ This is a collection of Python libraries to provide easy server-side support for
 These libraries provide support for:
 
 * Server-side processing - work with millions of rows
-* Editor - CRUD UI for DataTables
+* [Editor](https://editor.datatables.net) - CRUD UI for DataTables
 * ColumnControl - Column search controls for DataTables
 * SearchBuilder - Complex search logic UI
 
@@ -44,11 +44,10 @@ def staff():
             .field(Field("salary"))
         )
         response = editor.process(request.values.to_dict(flat=True))
-        db.commit()
     return jsonify(response)
 ```
 
-Similarly, if your table is readonly, the `DataTable` and `Column` classes can be used:
+Similarly, if your table is readonly, the `DataTable` and `Column` classes can be used (this will support DataTables' client-side or server-side processing modes):
 
 ```python
 from flask import Flask, request, jsonify
@@ -69,11 +68,10 @@ def staff():
             .column(Column("salary"))
         )
         response = table.process()
-        db.commit()
     return jsonify(response)
 ```
 
-### Documentation
+## Documentation
 
 For full documentation, [please refer to the DataTables site](https://datatables.net/manual/python).
 
