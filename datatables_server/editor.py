@@ -2416,14 +2416,14 @@ class Editor(NestedData):
         req.upload_field = data.get("uploadField")
         req.values = data.get("values")
 
-        # Parse ordering array – supports both a JSON list and a form-encoded
+        # Parse ordering array - supports both a JSON list and a form-encoded
         # index-keyed dict (e.g. {"0": {"column": "1", "dir": "asc"}}).
         if data.get("order"):
             order_raw = data["order"]
             order_items = order_raw.values() if isinstance(order_raw, dict) else order_raw
             req.order = [DtOrder(dir=o.get("dir", "asc"), column=int(o.get("column", 0))) for o in order_items]
 
-        # Parse columns array – same dual-format support.
+        # Parse columns array - same dual-format support.
         if data.get("columns"):
             req.columns = []
             columns_raw = data["columns"]

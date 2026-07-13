@@ -1,10 +1,8 @@
 """
-datatables_server – Python/SQLAlchemy port of the DataTables Editor Node.js library.
+datatables_server - Python/SQLAlchemy based libraries for DataTables.
 
 This package provides server-side processing and CRUD support for
-`DataTables <https://datatables.net/>`_ and
-`Editor <https://editor.datatables.net/>`_, backed by SQLAlchemy Core instead
-of Knex.js.
+`DataTables <https://datatables.net/>`_ and its extensions such as Editor.
 
 Quickstart::
 
@@ -32,16 +30,18 @@ Public API
 ----------
 The following names are importable directly from the package root:
 
-- :class:`Editor` – main CRUD / SSP processor
-- :class:`Field` – column / field definition
-- :class:`Mjoin` – many-to-many join helper
-- :class:`Options` – select/radio/checkbox option source
-- :class:`SearchBuilderOptions` – SearchBuilder option source
-- :class:`SearchPaneOptions` – SearchPanes option source
-- :class:`Upload` – file upload handler
-- :class:`Format` – formatter factories (``Format.sql_date_to_format``, …)
-- :class:`Validate` – validator factories (``Validate.required``, …)
-- :class:`Column` – read-only column definition
+- :class:`DataTable` - read only DataTable
+- :class:`Column` - read only columns for the DataTable class
+- :class:`Editor` - main CRUD / SSP processor
+- :class:`Field` - column / fields for read / write operations
+- :class:`Mjoin` - many-to-many join helper
+- :class:`Options` - select/radio/checkbox option source
+- :class:`SearchBuilderOptions` - SearchBuilder option source
+- :class:`SearchPaneOptions` - SearchPanes option source
+- :class:`Upload` - file upload handler
+- :class:`Format` - formatter factories (``Format.sql_date_to_format``, …)
+- :class:`Validate` - validator factories (``Validate.required``, …)
+- :class:`Column` - read-only column definition
 
 Type aliases from :mod:`datatables_server.types`:
 

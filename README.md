@@ -5,7 +5,7 @@ This is a collection of Python libraries to provide easy server-side support for
 These libraries provide support for:
 
 * Server-side processing - work with millions of rows
-* [Editor](https://editor.datatables.net) - CRUD UI for DataTables
+* [Editor](https://datatables.net/manual/extensions/editor) - Editing UI for DataTables
 * ColumnControl - Column search controls for DataTables
 * SearchBuilder - Complex search logic UI
 

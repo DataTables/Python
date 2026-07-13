@@ -1,5 +1,5 @@
 """
-Validation host container – holds context information during field validation.
+Validation host container - holds context information during field validation.
 """
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ class ValidationHost:
         """Initialise the validation host with all required context.
 
         Args:
-            action: Editor action – ``'create'``, ``'edit'``, or ``'remove'``.
+            action: Editor action - ``'create'``, ``'edit'``, or ``'remove'``.
             id:     Row id being processed (empty string for create).
             field:  The :class:`~datatables_server.Field` being validated.
             editor: The owning :class:`~datatables_server.Editor` instance.

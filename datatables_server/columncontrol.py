@@ -1,5 +1,5 @@
 """
-columncontrol.py – Server-side processing helpers for the DataTables ColumnControl extension.
+columncontrol.py - Server-side processing helpers for the DataTables ColumnControl extension.
 
 This module provides :func:`column_control_ssp`, a function that inspects the
 ``columns[].columnControl`` property of a DataTables SSP request and applies the
@@ -35,9 +35,9 @@ def column_control_ssp(editor: "Editor", stmt: sa.Select, http: "DtRequest") -> 
 
     Supported control types:
 
-    * **SearchList** (``columnControl.list``) – adds a ``WHERE column IN (…)``
+    * **SearchList** (``columnControl.list``) - adds a ``WHERE column IN (…)``
       condition.
-    * **Search input** (``columnControl.search``) – supports ``text``, ``num``
+    * **Search input** (``columnControl.search``) - supports ``text``, ``num``
       and ``date`` logic modes, each with their own set of comparison operators
       (``equal``, ``notEqual``, ``contains``, ``notContains``, ``starts``,
       ``ends``, ``greater``, ``less``, ``greaterOrEqual``, ``lessOrEqual``,

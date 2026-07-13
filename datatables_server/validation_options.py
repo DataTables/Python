@@ -1,5 +1,5 @@
 """
-Validation options – per-validator configuration with fluent chaining.
+Validation options - per-validator configuration with fluent chaining.
 """
 
 from __future__ import annotations
@@ -76,13 +76,13 @@ class ValidationOptions:
 
         This method can be called in three ways:
 
-        1. **Callable**: ``depends_on(fn)`` – the validator runs only when
+        1. **Callable**: ``depends_on(fn)`` - the validator runs only when
            ``fn(val, data, host)`` returns ``True``.
-        2. **Field name only**: ``depends_on('field_name')`` – the validator
+        2. **Field name only**: ``depends_on('field_name')`` - the validator
            runs only when the named field has a non-empty, non-``None`` value
            in the submitted data.
         3. **Field name + value(s)**: ``depends_on('field_name', 'value')`` or
-           ``depends_on('field_name', ['v1', 'v2'])`` – the validator runs only
+           ``depends_on('field_name', ['v1', 'v2'])`` - the validator runs only
            when the named field matches one of the given value(s).
 
         Args:
@@ -208,10 +208,10 @@ class ValidationOptions:
                     return dep_val in self._depends_value
                 return dep_val == self._depends_value
 
-            # No target value – just check that the dependent field is non-empty.
+            # No target value - just check that the dependent field is non-empty.
             return dep_val is not None and dep_val != ""
 
-        # No depends condition – always run the validator.
+        # No depends condition - always run the validator.
         return True
 
     # ------------------------------------------------------------------

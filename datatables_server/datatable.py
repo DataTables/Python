@@ -1,5 +1,5 @@
 """
-datatable.py – Read-only DataTables server-side processing wrapper.
+datatable.py - Read-only DataTables server-side processing wrapper.
 
 :class:`DataTable` wraps :class:`~datatables_server.editor.Editor` with
 ``write=False`` and exposes a :class:`~datatables_server.column.Column`-oriented
@@ -135,7 +135,7 @@ class DataTable:
         if not cols:
             return self._columns
 
-        # Flatten – allow both ``columns(c1, c2)`` and ``columns([c1, c2])``
+        # Flatten - allow both ``columns(c1, c2)`` and ``columns([c1, c2])``
         flat: List[Column] = []
         for item in cols:
             if isinstance(item, list):

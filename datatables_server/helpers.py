@@ -1,5 +1,5 @@
 """
-helpers.py – Utility formatter factories for use with the DataTables server library.
+helpers.py - Utility formatter factories for use with the DataTables server library.
 
 This module provides helpers that address the gap between Python's
 :mod:`datetime` ``strftime``/``strptime`` directives and the MomentJS
@@ -42,9 +42,9 @@ def unpadded_format(
     The *components* argument describes how to locate each component that
     needs de-padding.  Each entry is a ``(separator, index)`` pair:
 
-    * **separator** – the string used to split the formatted date string into
+    * **separator** - the string used to split the formatted date string into
       parts (e.g. ``"/"`` for ``"04/02/2026"``, ``" "`` for ``"02 May 2026"``).
-    * **index** – the zero-based position of the component to de-pad after
+    * **index** - the zero-based position of the component to de-pad after
       splitting on *separator*.
 
     For formats with a **single separator**, pass one tuple directly::

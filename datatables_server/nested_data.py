@@ -116,13 +116,13 @@ class NestedData:
                 raise ValueError(
                     f"A property with the name `{name}` already exists. "
                     "This can occur if you have properties which share a prefix "
-                    "– for example `name` and `name.first`."
+                    "- for example `name` and `name.first`."
                 )
             inner = inner[part]
 
         last = parts[-1]
 
         if last in inner:
-            raise ValueError(f"Duplicate field detected – a field with the name `{name}` already exists.")
+            raise ValueError(f"Duplicate field detected - a field with the name `{name}` already exists.")
 
         inner[last] = value

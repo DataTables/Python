@@ -42,7 +42,7 @@ class DtOrder:
     """DataTables server-side processing ordering descriptor."""
 
     dir: str
-    """Sort direction – either ``'asc'`` or ``'desc'``."""
+    """Sort direction - either ``'asc'`` or ``'desc'``."""
 
     column: int
     """Zero-based column index to sort by."""

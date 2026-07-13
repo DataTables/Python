@@ -30,7 +30,7 @@ try:
         """Parse *val* using dateutil, which tolerates trailing time components."""
         return _dateutil_parser.parse(val)
 
-except ImportError:  # pragma: no cover – dateutil is optional
+except ImportError:  # pragma: no cover - dateutil is optional
 
     def _parse_loose(val: str) -> datetime:  # type: ignore[misc]
         """Fallback: strip a trailing time component before parsing."""
