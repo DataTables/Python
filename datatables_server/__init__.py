@@ -38,6 +38,7 @@ The following names are importable directly from the package root:
 - :class:`Options` - select/radio/checkbox option source
 - :class:`SearchBuilderOptions` - SearchBuilder option source
 - :class:`SearchPaneOptions` - SearchPanes option source
+- :class:`StateRestore` - StateRestore state storage
 - :class:`Upload` - file upload handler
 - :class:`Format` - formatter factories (``Format.sql_date_to_format``, …)
 - :class:`Validate` - validator factories (``Validate.required``, …)
@@ -69,6 +70,7 @@ from .nested_data import NestedData
 from .options import Options
 from .search_builder_options import SearchBuilderOptions
 from .search_pane_options import SearchPaneOptions
+from .state_restore import StateRestore
 from .types import (
     DtColumn,
     DtColumnControl,
@@ -96,6 +98,7 @@ __all__ = [
     "Options",
     "SearchBuilderOptions",
     "SearchPaneOptions",
+    "StateRestore",
     "Upload",
     "DbOpts",
     "Column",
