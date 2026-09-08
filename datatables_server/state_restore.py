@@ -11,6 +11,8 @@ from typing import Any, Dict, List, Mapping, Optional, Union
 import sqlalchemy as sa
 from sqlalchemy.engine import Connection
 
+from .editor import parse_form_data
+
 # ---------------------------------------------------------------------------
 # Public type aliases
 # ---------------------------------------------------------------------------
@@ -251,12 +253,19 @@ class StateRestore:
         creating, editing or removing states.  The result is available from
         :meth:`data`.
 
+        Bracket notation submitted by the client (``ids[]=1&ids[]=2``) is
+        resolved with :func:`~datatables_server.parse_form_data`, so the raw
+        form data from the web framework can be passed in directly.
+
         Args:
             data: The submitted request data.
 
         Returns:
             ``self`` for method chaining.
         """
+        if data and (not isinstance(data, dict) or any("[" in key for key in data)):
+            data = parse_form_data(data)
+
         action = data.get("action") if data else None
 
         if action is None:
@@ -587,7 +596,8 @@ class StateRestore:
         """Delete states.
 
         Args:
-            data: Submitted data with an ``'ids'`` parameter.
+            data: Submitted data with an ``'ids'`` parameter - a list of ids, or
+                a single id.
 
         Returns:
             An empty data list, or an error response.
@@ -598,6 +608,9 @@ class StateRestore:
             return validated
 
         ids = data.get("ids")
+
+        if isinstance(ids, (str, int)):
+            ids = [ids]
 
         if not ids or not isinstance(ids, (list, tuple)):
             return {"error": "Invalid submitted data"}

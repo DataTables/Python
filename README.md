@@ -43,9 +43,12 @@ def staff():
             .field(Field("position"))
             .field(Field("salary"))
         )
-        response = editor.process(request.values.to_dict(flat=True))
+        editor.process(request.values)
+        response = editor.data().to_dict()
     return jsonify(response)
 ```
+
+Pass the framework's own request object (Flask's `request.values` / `request.form`, or the equivalent multi-value mapping in your framework) rather than a flattened `dict`. DataTables and Editor submit arrays using bracket notation (`ids[]=1&ids[]=2`), which repeats a key — flattening with `to_dict(flat=True)` keeps only one of the values before the library can read them.
 
 Similarly, if your table is readonly, the `DataTable` and `Column` classes can be used (this will support DataTables' client-side or server-side processing modes):
 
@@ -67,7 +70,8 @@ def staff():
             .column(Column("position"))
             .column(Column("salary"))
         )
-        response = table.process()
+        table.process(request.values)
+        response = table.data().to_dict()
     return jsonify(response)
 ```
 

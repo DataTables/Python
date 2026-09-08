@@ -80,19 +80,28 @@ def parse_form_data(data: Any) -> dict:
         data[row_58][last_name]  = Doe
         action                   = edit
 
+    Keys ending in ``[]`` are un-indexed arrays — every value submitted under
+    that key is collected into a list::
+
+        ids[] = 25
+        ids[] = 15   ->   {'ids': ['25', '15']}
+
     Standard ``request.form.to_dict()`` flattens this into literal key strings
     rather than a nested structure.  This function parses those bracket-encoded
     keys back into a proper nested ``dict`` that :meth:`Editor.process` can
     consume.
 
-    The function also accepts objects that expose a ``to_dict(flat=False)``
-    method (such as Werkzeug's ``ImmutableMultiDict``), a ``multi_items()``
-    iterable, a plain ``dict``, or any mapping — making it safe to call
-    regardless of what the web framework hands you.
+    The function accepts multi-value mappings — objects exposing ``lists()``
+    (Werkzeug's ``MultiDict``, as used by Flask's ``request.form`` and
+    ``request.values``) or ``multi_items()`` (Starlette's ``FormData``, as used
+    by FastAPI) — as well as a plain ``dict`` or any other mapping, making it
+    safe to call regardless of what the web framework hands you.  Multi-value
+    mappings are read in full, so repeated keys are not lost.
 
     Args:
-        data: Raw form data from the web framework — a ``dict``, a Werkzeug
-            ``ImmutableMultiDict``, or any mapping.
+        data: Raw form data from the web framework — a multi-value mapping such
+            as Werkzeug's ``ImmutableMultiDict``, a plain ``dict``, or any other
+            mapping.
 
     Returns:
         A plain nested ``dict`` with bracket notation fully resolved.
@@ -105,8 +114,12 @@ def parse_form_data(data: Any) -> dict:
     # Collect flat key/value pairs from whatever object we received.
     pairs: List[tuple] = []
 
-    if hasattr(data, "multi_items"):
-        # Werkzeug ImmutableMultiDict (Flask request.form)
+    if hasattr(data, "lists"):
+        # Werkzeug MultiDict (Flask request.form / request.values) — plain
+        # items() would give only the first value of each repeated key
+        pairs = [(k, v) for k, values in data.lists() for v in values]
+    elif hasattr(data, "multi_items"):
+        # Starlette FormData / QueryParams (FastAPI)
         pairs = list(data.multi_items())
     elif hasattr(data, "items"):
         # Plain dict or dict-like mapping
@@ -122,8 +135,17 @@ def parse_form_data(data: Any) -> dict:
     result: dict = {}
 
     for raw_key, value in pairs:
+        # A trailing '[]' ('ids[]=1&ids[]=2') is jQuery's un-indexed array
+        # notation — each submitted value is appended to a list rather than
+        # overwriting the previous one.
+        is_array = raw_key.endswith("[]")
+        key = raw_key[:-2] if is_array else raw_key
+
         # Split 'a[b][c]' into ['a', 'b', 'c']
-        parts = [p.rstrip("]") for p in raw_key.replace("[", "]").split("]") if p != ""]
+        parts = [p.rstrip("]") for p in key.replace("[", "]").split("]") if p != ""]
+
+        if not parts:
+            continue
 
         node = result
         for part in parts[:-1]:
@@ -135,7 +157,13 @@ def parse_form_data(data: Any) -> dict:
             node = node[part]
 
         leaf = parts[-1]
-        if leaf in node and isinstance(node[leaf], dict):
+        if is_array:
+            existing = node.get(leaf)
+            if isinstance(existing, list):
+                existing.append(value)
+            else:
+                node[leaf] = [value]
+        elif leaf in node and isinstance(node[leaf], dict):
             # Don't overwrite a dict that child keys already populated
             pass
         else:
