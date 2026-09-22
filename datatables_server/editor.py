@@ -271,7 +271,7 @@ class Editor(NestedData):
     """
 
     Action = Action
-    version = "3.0.2"
+    version = "3.1.0"
 
     # ------------------------------------------------------------------
     # Constructor
